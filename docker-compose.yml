@@ -2,27 +2,20 @@
 version: "2.1"
 services:
   wireguard:
-    image: linuxserver/wireguard:v1.0.20210914-ls55
-    container_name: wireguard
+    image: weejewel/wg-easy:5
+    container_name: wg-easy
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
     environment:
-      - PUID=${UID}
-      - PGID=${GID}
-      - TZ=Europe/London
-      - SERVERURL=auto
-      - SERVERPORT=51820 #optional
-      - PEERS=3 #optional
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
-      - LOG_CONFS=true #optional
+      - WG_HOST=127.0.0.1
+      - PASSWORD=mKbU8FrQActcLqBZ
     volumes:
-      - ./config:/config
-      - /lib/modules:/lib/modules
+      - ./.wg-easy:/etc/wireguard
     ports:
       - 51820:51820/udp
+      - 51821:51821/tcp
     sysctls:
+      - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
