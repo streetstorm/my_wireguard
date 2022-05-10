@@ -3,6 +3,7 @@ version: "2.1"
 services:
   wireguard:
     image: linuxserver/wireguard:v1.0.20210914-ls55
+    user: $UID
     container_name: wireguard
     cap_add:
       - NET_ADMIN
